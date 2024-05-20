@@ -4,11 +4,15 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 async function signup(req, res) {
-  console.count();
-  console.log("Received request body:", req.body);
-  const { firstName, lastName, email, password } = req.body;
-
   try {
+    const { firstName, lastName, email, password } = req.body;
+
+    if (!firstName || !lastName || !email || !password) {
+      return res
+        .status(400)
+        .json({ hasError: true, message: "All fields are required" });
+    }
+
     let user = await User.findOne({ email });
 
     if (user) {
@@ -31,10 +35,11 @@ async function signup(req, res) {
       expiresIn: "1h",
     });
 
-    res.status(201).json({ token });
+    return res.status(201).json({ token });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+
+    return res.status(500).send("Server error");
   }
 }
 
