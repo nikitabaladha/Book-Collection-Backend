@@ -5,13 +5,15 @@ const Book = require("../../models/Book");
 async function getBookById(req, res) {
   try {
     const bookId = req.params.id;
+    const userId = req.user.id;
 
-    const book = await Book.findById(bookId);
+    const book = await Book.findById(bookId, userId);
 
     if (!book) {
-      return res
-        .status(404)
-        .json({ hasError: true, message: "Book not found" });
+      return res.status(404).json({
+        hasError: true,
+        message: "Book not found",
+      });
     }
 
     return res.status(200).json({

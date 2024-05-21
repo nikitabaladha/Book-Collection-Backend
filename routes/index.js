@@ -6,6 +6,7 @@ const Middleware = require("../middleware/index.js");
 module.exports = (app) => {
   app.post("/api/signup", Controller.signup);
   app.post("/api/login", Controller.login);
+  app.get("/api/user", Controller.User.get);
   app.post("/api/book", Middleware, Controller.Book.create);
   app.get("/api/book", Middleware, Controller.Book.get);
   app.get("/api/book/:id", Middleware, Controller.Book.getBookById);

@@ -19,6 +19,11 @@ const bookSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+  },
 });
 
 bookSchema.index({ title: 1, author: 1 }, { unique: true });

@@ -4,8 +4,8 @@ const Book = require("../../models/Book");
 async function deleteBookById(req, res) {
   try {
     const bookId = req.params.id;
-
-    const book = await Book.findById(bookId);
+    const userId = req.user.id;
+    const book = await Book.findOne({ _id: bookId, userId: userId });
 
     if (!book) {
       return res

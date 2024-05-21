@@ -1,23 +1,36 @@
 // controllers/Book/update.js
 const Book = require("../../models/Book");
+const bookValidationSchema = require("../Validators/bookValidationSchema.js");
 
 async function update(req, res) {
   try {
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        hasError: true,
+        message: "Unauthorized access. Please log in.",
+      });
+    }
+
+    const { error } = bookValidationSchema.validate(req.body, {
+      abortEarly: false,
+    });
+
+    if (error?.details?.length) {
+      const errorMessages = error.details.map((detail) => detail.message);
+      return res.status(400).json({ message: errorMessages });
+    }
+
     const { title, author, genre, yearPublished } = req.body;
 
     const bookId = req.params.id;
-
-    if (!title || !author || !genre || !yearPublished) {
-      return res
-        .status(400)
-        .json({ hasError: true, message: "All fields are required" });
-    }
 
     const existingBook = await Book.findById(bookId);
 
     if (!existingBook) {
       return res
-        .status(404)
+        .status(400)
         .json({ hasError: true, message: "Book not found" });
     }
 
