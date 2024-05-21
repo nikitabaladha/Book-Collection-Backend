@@ -1,4 +1,4 @@
-// controllers/Book/deleteById.js
+// controllers/Book/deleteBookById.js
 const Book = require("../../models/Book");
 
 async function deleteBookById(req, res) {
