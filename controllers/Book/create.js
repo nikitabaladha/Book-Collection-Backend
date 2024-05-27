@@ -11,7 +11,7 @@ async function create(req, res) {
     });
 
     if (error?.details?.length) {
-      const errorMessages = error.details.map((detail) => detail.message);
+      const errorMessages = error.details[0].message;
       return res.status(400).json({ message: errorMessages });
     }
 
