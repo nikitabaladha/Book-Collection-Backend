@@ -14,7 +14,7 @@ app.use(cors());
 
 const routes = require("./routes")(app);
 
-// const PORT = config.PORT || 3001;
-const PORT = 3001;
+const PORT = config.PORT || 3001;
+// const PORT = 3001;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
