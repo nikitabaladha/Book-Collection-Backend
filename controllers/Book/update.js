@@ -40,6 +40,12 @@ async function update(req, res) {
     existingBook.genre = genre;
     existingBook.yearPublished = yearPublished;
 
+    if (req.file) {
+      const coverPath = "/coverImage/images";
+      const coverImage = coverPath + "/" + req.file.filename;
+      existingBook.coverImage = coverImage;
+    }
+
     await existingBook.save();
 
     return res.status(200).json({

@@ -2,8 +2,7 @@
 
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("config");
+
 const signupValidationSchema = require("./Validators/signupValidationSchema.js");
 
 async function signup(req, res) {

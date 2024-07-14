@@ -1,10 +1,19 @@
 // controllers/Book/create.js
+
+const path = require("path");
 const Book = require("../../models/Book");
 const bookValidationSchema = require("../Validators/bookValidationSchema.js");
 
 async function create(req, res) {
   try {
     const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(403).json({
+        hasError: true,
+        message: "Forbidden: Only logged-in users can create Book",
+      });
+    }
 
     const { error } = bookValidationSchema.validate(req.body, {
       abortEarly: false,
@@ -14,6 +23,17 @@ async function create(req, res) {
       const errorMessages = error.details[0].message;
       return res.status(400).json({ message: errorMessages });
     }
+
+    if (!req.file) {
+      return res.status(400).json({
+        hasError: true,
+        message: "Cover image is required",
+      });
+    }
+
+    const coverPath = "/coverImage/images";
+
+    const coverImage = coverPath + "/" + req.file.filename;
 
     const { title, author, genre, yearPublished } = req.body;
 
@@ -26,11 +46,12 @@ async function create(req, res) {
     }
 
     const book = new Book({
+      coverImage,
       title,
       author,
       genre,
       yearPublished,
-      userId: req.user.id,
+      userId,
     });
 
     await book.save();

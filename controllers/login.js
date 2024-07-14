@@ -1,9 +1,8 @@
-// controllers/login.js
-
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
+const { JWT_SECRET, jwtExpiration } = require("../config/local.json");
+
 const loginValidationSchema = require("./Validators/loginValidationSchema.js");
 
 async function login(req, res) {
@@ -22,7 +21,7 @@ async function login(req, res) {
     if (!user) {
       return res
         .status(401)
-        .json({ hasError: true, message: "User does not exists" });
+        .json({ hasError: true, message: "User does not exist" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -35,8 +34,8 @@ async function login(req, res) {
 
     const payload = { id: user.id };
 
-    const token = jwt.sign(payload, config.get("JWT_SECRET"), {
-      expiresIn: "1h",
+    const token = jwt.sign(payload, JWT_SECRET, {
+      expiresIn: jwtExpiration,
     });
 
     return res

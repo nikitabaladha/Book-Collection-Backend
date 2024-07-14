@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 function middleware(req, res, next) {
+  console.log(req.file, req.files);
   const token = req.headers.access_token;
 
   if (!token) {
