@@ -9,6 +9,7 @@ module.exports = (app) => {
   app.post("/api/login", Controller.login);
   app.get("/api/user", Controller.User.get);
   app.get("/api/search", Controller.Book.search);
+  app.get("/api/get-all", Controller.Book.getAll);
   app.post(
     "/api/book",
     Middleware,
