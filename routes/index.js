@@ -18,6 +18,11 @@ module.exports = (app) => {
   );
   app.get("/api/book", Middleware, Controller.Book.get);
   app.get("/api/book/:id", Middleware, Controller.Book.getBookById);
-  app.put("/api/book/:id", Middleware, Controller.Book.update);
+  app.put(
+    "/api/book/:id",
+    Middleware,
+    upload.single("coverImage"),
+    Controller.Book.update
+  );
   app.delete("/api/book/:id", Middleware, Controller.Book.deleteBookById);
 };

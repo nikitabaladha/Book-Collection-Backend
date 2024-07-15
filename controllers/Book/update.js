@@ -44,9 +44,15 @@ async function update(req, res) {
       const coverPath = "/coverImage/images";
       const coverImage = coverPath + "/" + req.file.filename;
       existingBook.coverImage = coverImage;
+    } else {
+      existingBook.coverImage = existingBook.coverImage;
     }
 
     await existingBook.save();
+
+    existingBook.coverImage = `${req.protocol}://${req.get("host")}${
+      existingBook.coverImage
+    }`;
 
     return res.status(200).json({
       hasError: false,
