@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    container_name: book-collection-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb://admin:secret@mongodb:27017/Book_Collection
+      - PORT=3001
+      - JWT_SECRET=/qX6gqENrRLgpxKdqibqSXKDEuQVz/I0xU21/wAJIbQ=
+      - jwtExpiration=24h
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
