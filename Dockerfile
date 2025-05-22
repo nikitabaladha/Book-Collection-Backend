@@ -17,5 +17,5 @@ COPY . .
 EXPOSE 3001
 
 # 7. Install PM2 globally and start app
-RUN npm install -g pm2
-CMD ["pm2-runtime", "server.js"]
+
+CMD ["node", "server.js"]
