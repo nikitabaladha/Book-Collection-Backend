@@ -40,7 +40,7 @@ async function login(req, res) {
 
     return res
       .status(200)
-      .json({ hasError: false, message: "Login Successful 12345678", token });
+      .json({ hasError: false, message: "Login Successfull ABCDEFGH", token });
   } catch (error) {
     console.error(error.message);
     return res.status(500).json({ message: "Server error" });
