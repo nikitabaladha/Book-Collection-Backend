@@ -45,6 +45,6 @@ async function login(req, res) {
     console.error(error.message);
     return res.status(500).json({ message: "Server error" });
   }
-}
+}s
 
 module.exports = login;
