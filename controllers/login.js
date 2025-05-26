@@ -1,7 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, jwtExpiration } = require("../config/local.json");
+
+const JWT_SECRET = process.env.JWT_SECRET;
+const jwtExpiration = process.env.JWT_EXPIRATION;
 
 const loginValidationSchema = require("./Validators/loginValidationSchema.js");
 
