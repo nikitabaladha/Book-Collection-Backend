@@ -1,4 +1,4 @@
-// controllers/signup.js
+// Book-Collection-Backend\controllers\signup.js
 
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");

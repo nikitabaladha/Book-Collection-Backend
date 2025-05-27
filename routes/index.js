@@ -1,5 +1,4 @@
-// routes/index.js
-
+// Book-Collection-Backend\routes\index.js
 const Controller = require("../controllers");
 const Middleware = require("../middleware/index.js");
 const upload = require("../controllers/Book/uploadImages");
@@ -16,6 +15,7 @@ module.exports = (app) => {
     upload.single("coverImage"),
     Controller.Book.create
   );
+
   app.get("/api/book", Middleware, Controller.Book.get);
   app.get("/api/book/:id", Middleware, Controller.Book.getBookById);
   app.put(
